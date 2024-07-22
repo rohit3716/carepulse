@@ -45,7 +45,7 @@ declare type SearchParamProps = {
     reason: string;
     schedule: Date;
     status: Status;
-    note: string | undefined;
+    note: string | undfined;
   };
   
   declare type UpdateAppointmentParams = {

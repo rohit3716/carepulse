@@ -100,8 +100,10 @@ const RenderField = ({field, props}:{ field:any; props:CustomProps}) => {
               showTimeSelect={ showTimeSelect ?? false}
               timeInputLabel='Time:'
               wrapperClassName='date-picker'
+              placeholderText={field.placeholder} 
               />
           </FormControl>
+          
         </div>
       )
 

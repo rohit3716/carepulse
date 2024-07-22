@@ -26,26 +26,32 @@ const RegisterForm = ({ user }: { user: User }) => {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      name: user ? user.name : "",
+      email: user ? user.email : "",
+      phone: user ? user.phone : "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
     setIsLoading(true);
-
+    // console.log("Values: ", values.identificationDocument);
+    
     let formData;
 
     if( values.identificationDocument && values.identificationDocument.length > 0 ){
       const blobFile = new Blob([values.identificationDocument[0]], {
         type: values.identificationDocument[0].type,
       })
-
+      // console.log("blobFile: ", blobFile);
+      
       formData = new FormData();
+      // console.log("formData constructor: ", formData);
+      
       formData.append('blobFile', blobFile);
       formData.append('fileName', values.identificationDocument[0].name)
     }
+
+   
 
 
     try {
@@ -55,7 +61,7 @@ const RegisterForm = ({ user }: { user: User }) => {
         birthDate: new Date(values.birthDate),
         identificationDocument:formData,
       }
-      console.log("patientData: ",patientData);
+      // console.log("patientData: ",patientData);
       // @ts-ignore
       const patient = await registerPatient(patientData);
       
